@@ -5,28 +5,74 @@
 
 // But in stead we're going to implement it from scratch:
 var getElementsByClassName = function(className) {
-  // your code here
-  var elements = [];
-  var elem = document.getElementsByTagName('body')[0];
+	
+	var body = document.body;
+	var elements = [];
 
+	var classTest = function(element) {
+		//base cases
+		if (element.hasChildNodes() === false) {
+			if (element.className === className) {
+				elements.push(element);
+			}
+		}
 
-  // base case
-  if (elem.hasChildNodes() === false) {
-  	if (elem.className === className) {
-  		return elements.push(elem);
-  	}
-  }
+		//recursive case
+		else {
+			var children = element.childNodes;
+			if (element.className === className) {
+				elements.push(element);
+			}
+			for (var i = 0, len = children.length; i < len; i++) {
+				classTest(children[i]);
+			}
 
-  else {
-  	if (elem.className === className) {
-  		elements.push(elem);
-  	}
-  	var len = elem.childNodes.length;
-  	for (var i = 0; i < len; i++) {
-		getElementsByClassName(className);
-  	}
-  }
+		}
+	};
 
-  return elements;
+	classTest(body);
+
+	return elements;
 
 };
+
+
+
+
+
+
+
+  // your code here
+  // var elements = [];
+
+  // var classTest = function(element, name) {
+  // 	 // base case
+  // 	if (element.hasChildNodes() === false) {
+  // 		if (element.className === name) {
+  // 			return elements.push(element);
+  // 		}
+  // 	} 
+  // 	 // recursive case
+  // 	var children = element.childNodes;
+  // 	else {
+  // 		if (element.className === name) {
+  // 			elements.push(element);
+  // 		}
+  // 		var len = children.length;
+  // 		for (var i = 0; i < len; i++) {
+  // 			classTest(children[i], className);
+  // 		}
+  // 	}
+  // };
+
+  // return elements;
+
+
+
+
+
+
+
+
+
+
