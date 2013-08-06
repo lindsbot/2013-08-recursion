@@ -14,14 +14,21 @@ var stringifyJSON = function (obj) {
   	return obj + '';
   }else if (_.isArray(obj)){
     return '[' + _.map(obj, stringifyJSON).join(',') + ']';
-  }else if (obj == {}){
-  	return '{}';
   }else if (obj == null){
   	return "null";
+  }else if (_.isEmpty(obj)){
+    return '{}';
   }else if (typeof obj === 'object'){
-  	for (var key in obj){
-  	  return '{' + stringifyJSON(key) + '}';
-  	}
+
+    for (var key in obj){
+      if (obj[key] === undefined || typeof obj[key] === 'function'){
+        console.log('Im looping');
+        return '{}';
+      }
+      else{
+        return '{' + _.map(obj, function(key, value){return stringifyJSON(value) + ':' + stringifyJSON(key);}).join(',') + '}';
+      }
+    }
   }else{
   	return obj + "";
   }
